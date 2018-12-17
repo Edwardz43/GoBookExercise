@@ -1,2 +1,2 @@
 # GoBookExercise
-exercises from [Go Programing Language]
+exercises from ```Go Programing Language```
