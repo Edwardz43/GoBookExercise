@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	for index, arg := range os.Environ() {
+	for index, arg := range os.Args {
 		s := "index : %d ; value : %s \n"
 		fmt.Printf(s, index, arg)
 	}
