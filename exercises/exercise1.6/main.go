@@ -3,21 +3,20 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/gif"
 	"io"
+	"log"
 	"math"
 	"math/rand"
+	"net/http"
 	"os"
+	"time"
 )
 
 // Packages not needed by version in book.
-import (
-	"log"
-	"net/http"
-	"time"
-)
 
 func main() {
 	// The sequence of images is deterministic unless we seed
@@ -26,6 +25,7 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	if len(os.Args) > 1 && os.Args[1] == "web" {
+		fmt.Println("http://localhost:8000/")
 		handler := func(w http.ResponseWriter, r *http.Request) {
 			lissajous(w)
 		}
