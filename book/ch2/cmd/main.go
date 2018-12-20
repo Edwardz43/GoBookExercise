@@ -1,22 +1,22 @@
 package main
 
 import (
+	"GoBook/book/ch2/popcount"
 	"fmt"
-	"gobook/book/ch2/tempconv"
+	"os"
+	"strconv"
 )
 
 func main() {
-	var f tempconv.Fahrenheit
+	for _, arg := range os.Args[1:] {
+		x, err := strconv.ParseInt(arg, 10, 0)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
 
-	f = 212
+		fmt.Println(popcount.PopCount(uint64(x)))
+		fmt.Println(popcount.V2(uint64(x)))
+	}
 
-	c := tempconv.FToC(f)
-
-	fmt.Println(c)
-
-	b := tempconv.BoilingC
-
-	fmt.Println(b)
-
-	fmt.Println(tempconv.CToF(b))
 }
