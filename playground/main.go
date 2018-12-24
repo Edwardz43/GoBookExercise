@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"gobook/book/ch3/basename"
+	"gobook/book/ch3/comma"
 	"math"
-	"time"
 )
 
 func main() {
@@ -45,12 +46,49 @@ func main() {
 	// nan := math.NaN()
 	// fmt.Println(nan == nan, nan < nan, nan > nan) // "false false false"
 
-	var x = complex(1, 2)    // 1+2i
-	var y = complex(3, 4)    // 3+4i
-	fmt.Println(x * y)       // "(-5+10i)"
-	fmt.Println(real(x * y)) // "-5"
-	fmt.Println(imag(x * y)) // "10"
+	// var x = complex(1, 2)    // 1+2i
+	// var y = complex(3, 4)    // 3+4i
+	// fmt.Println(x * y)       // "(-5+10i)"
+	// fmt.Println(real(x * y)) // "-5"
+	// fmt.Println(imag(x * y)) // "10"
 
-	fmt.Println(3.14i) // "10"
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
+	// fmt.Println(3.14i) // "10"
+	// fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
+
+	// s := "Hello, 世界"
+	// fmt.Println(len(s))                    // "13"
+	// fmt.Println(utf8.RuneCountInString(s)) // "9"
+
+	// // for i := 0; i < len(s); {
+	// // 	r, size := utf8.DecodeRuneInString(s[i:])
+	// // 	fmt.Printf("%d\t%c\n", i, r)
+	// // 	i += size
+	// // }
+
+	// for i, r := range "Hello, 世界" {
+	// 	fmt.Printf("%d\t%q\t%d\n", i, r, r)
+	// }
+
+	// fmt.Println(utf8.RuneCountInString(s))
+
+	// "program" in Japanese katakana
+	// s := "プログラム"
+	// fmt.Printf("% x\n", s) // "e3 83 97 e3 83 ad e3 82 b0 e3 83 a9 e3 83 a0"
+	// r := []rune(s)
+	// fmt.Printf("%x\n", r) // "[30d7 30ed 30b0 30e9 30e0]"
+
+	// fmt.Println(string(1234567)) // "(?)"
+
+	fmt.Println(basename.Basename1("a/b/c.go")) // "c"
+	fmt.Println(basename.Basename1("c.d.go"))   // "c.d"
+	fmt.Println(basename.Basename1("abc"))      // "abc"
+
+	fmt.Println("-----------------")
+
+	fmt.Println(basename.Basename2("a/b/c.go")) // "c"
+	fmt.Println(basename.Basename2("c.d.go"))   // "c.d"
+	fmt.Println(basename.Basename2("abc"))      // "abc"
+
+	fmt.Println(comma.Comma("123456789"))
+	fmt.Println(comma.Comma("12"))
 }
