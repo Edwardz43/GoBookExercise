@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"gobook/book/ch3/basename"
+	"gobook/book/ch3/comma"
+)
 
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
@@ -135,4 +139,40 @@ func main() {
 	c := 0i     // untyped complex; implicit complex128(0i)
 
 	fmt.Println(i, r, f, c)
+	// s := "Hello, 世界"
+	// fmt.Println(len(s))                    // "13"
+	// fmt.Println(utf8.RuneCountInString(s)) // "9"
+
+	// // for i := 0; i < len(s); {
+	// // 	r, size := utf8.DecodeRuneInString(s[i:])
+	// // 	fmt.Printf("%d\t%c\n", i, r)
+	// // 	i += size
+	// // }
+
+	// for i, r := range "Hello, 世界" {
+	// 	fmt.Printf("%d\t%q\t%d\n", i, r, r)
+	// }
+
+	// fmt.Println(utf8.RuneCountInString(s))
+
+	// "program" in Japanese katakana
+	// s := "プログラム"
+	// fmt.Printf("% x\n", s) // "e3 83 97 e3 83 ad e3 82 b0 e3 83 a9 e3 83 a0"
+	// r := []rune(s)
+	// fmt.Printf("%x\n", r) // "[30d7 30ed 30b0 30e9 30e0]"
+
+	// fmt.Println(string(1234567)) // "(?)"
+
+	fmt.Println(basename.Basename1("a/b/c.go")) // "c"
+	fmt.Println(basename.Basename1("c.d.go"))   // "c.d"
+	fmt.Println(basename.Basename1("abc"))      // "abc"
+
+	fmt.Println("-----------------")
+
+	fmt.Println(basename.Basename2("a/b/c.go")) // "c"
+	fmt.Println(basename.Basename2("c.d.go"))   // "c.d"
+	fmt.Println(basename.Basename2("abc"))      // "abc"
+
+	fmt.Println(comma.Comma("123456789"))
+	fmt.Println(comma.Comma("12"))
 }
