@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"gobook/book/ch3/basename"
-	"gobook/book/ch3/comma"
-)
+import "fmt"
 
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
@@ -133,12 +129,12 @@ func main() {
 	// 	f        = uint(-1)          // compile error: constant underflows uint
 	// )
 
-	i := 0      // untyped integer; implicit int(0)
-	r := '\000' // untyped rune; implicit rune('\000')
-	f := 0.0    // untyped floating-point; implicit float64(0.0)
-	c := 0i     // untyped complex; implicit complex128(0i)
+	// i := 0      // untyped integer; implicit int(0)
+	// r := '\000' // untyped rune; implicit rune('\000')
+	// f := 0.0    // untyped floating-point; implicit float64(0.0)
+	// c := 0i     // untyped complex; implicit complex128(0i)
 
-	fmt.Println(i, r, f, c)
+	// fmt.Println(i, r, f, c)
 	// s := "Hello, 世界"
 	// fmt.Println(len(s))                    // "13"
 	// fmt.Println(utf8.RuneCountInString(s)) // "9"
@@ -163,16 +159,60 @@ func main() {
 
 	// fmt.Println(string(1234567)) // "(?)"
 
-	fmt.Println(basename.Basename1("a/b/c.go")) // "c"
-	fmt.Println(basename.Basename1("c.d.go"))   // "c.d"
-	fmt.Println(basename.Basename1("abc"))      // "abc"
+	// fmt.Println(basename.Basename1("a/b/c.go")) // "c"
+	// fmt.Println(basename.Basename1("c.d.go"))   // "c.d"
+	// fmt.Println(basename.Basename1("abc"))      // "abc"
 
-	fmt.Println("-----------------")
+	// fmt.Println("-----------------")
 
-	fmt.Println(basename.Basename2("a/b/c.go")) // "c"
-	fmt.Println(basename.Basename2("c.d.go"))   // "c.d"
-	fmt.Println(basename.Basename2("abc"))      // "abc"
+	// fmt.Println(basename.Basename2("a/b/c.go")) // "c"
+	// fmt.Println(basename.Basename2("c.d.go"))   // "c.d"
+	// fmt.Println(basename.Basename2("abc"))      // "abc"
 
-	fmt.Println(comma.Comma("123456789"))
-	fmt.Println(comma.Comma("12"))
+	// fmt.Println(comma.Comma("123456789"))
+	// fmt.Println(comma.Comma("12"))
+
+	// var a [3]int             // array of 3 integers
+	// fmt.Println(a[0])        // print the first element
+	// fmt.Println(a[len(a)-1]) // print the last element, a[2]
+	// // Print the indices and elements.
+	// for i, v := range a {
+	// 	fmt.Printf("%d %d\n", i, v)
+	// }
+	// // Print the elements only.
+	// for _, v := range a {
+	// 	fmt.Printf("%d\n", v)
+	// }
+
+	//var q [3]int = [3]int{1, 2, 3}
+	// var r [3]int = [3]int{1, 2}
+	// fmt.Println(r[2]) // "0"
+
+	// q := [...]int{1, 2, 3}
+	// fmt.Printf("%T\n", q) // "[3]int"
+
+	// q := [3]int{1, 2, 3}
+	// q = [4]int{1, 2, 3, 4} // compile error: cannot assign [4]int to [3]int
+
+	// type Currency int
+	// const (
+	// 	USD Currency = iota // 美元
+	// 	EUR                 // 歐元
+	// 	GBP                 // 英鎊
+	// 	RMB                 // 人民幣
+	// 	NTD                 // 新台幣
+	// )
+	// symbol := [...]string{USD: "$", EUR: "€", GBP: "£", RMB: "¥", NTD: "$"}
+	// fmt.Println(GBP, symbol[GBP]) // "3 ¥"
+
+	// r := [...]int{99: -1}
+	// fmt.Println(r)
+
+	a := [2]int{1, 2}
+	b := [...]int{1, 2}
+	c := [2]int{1, 3}
+	fmt.Println(a == b, a == c, b == c) // "true false false"
+	// d := [3]int{1, 2}
+	// fmt.Println(a == d) // compile error: cannot compare [2]int == [3]int
+
 }
