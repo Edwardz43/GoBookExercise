@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"GoBook/book/ch4/nonempty"
+	"fmt"
+)
 
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
@@ -208,11 +211,80 @@ func main() {
 	// r := [...]int{99: -1}
 	// fmt.Println(r)
 
-	a := [2]int{1, 2}
-	b := [...]int{1, 2}
-	c := [2]int{1, 3}
-	fmt.Println(a == b, a == c, b == c) // "true false false"
+	// a := [2]int{1, 2}
+	// b := [...]int{1, 2}
+	// c := [2]int{1, 3}
+	// fmt.Println(a == b, a == c, b == c) // "true false false"
 	// d := [3]int{1, 2}
 	// fmt.Println(a == d) // compile error: cannot compare [2]int == [3]int
 
+	// months := [...]string{
+	// 	1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
+	// 	7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
+
+	// q2 := months[4:7]
+	// summer := months[6:9]
+
+	// fmt.Printf("%s\n", q2)
+	// fmt.Printf("%s\n", summer)
+
+	// for _, s := range summer {
+	// 	for _, q := range q2 {
+	// 		if s == q {
+	// 			fmt.Printf("%s appears in both\n", s)
+	// 		}
+	// 	}
+	// }
+
+	// //fmt.Println(summer[:20])    // panic: out of range
+	// endlessSummer := summer[:5] // extend a slice (within capacity)
+	// fmt.Println(endlessSummer)  // "[June July August September October]"
+
+	// s := [...]int{0, 1, 2, 3, 4, 5}
+
+	// rev.LeftShift(s[:], 6)
+
+	// fmt.Println(s) // "[2 3 4 5 0 1]"
+
+	// var s []int // len(s) == 0, s == nil
+	// fmt.Println(s)
+	// s = nil // len(s) == 0, s == nil
+	// fmt.Println(s == nil)
+	// s = []int(nil) // len(s) == 0, s == nil
+	// fmt.Println(s == nil)
+	// s = []int{} // len(s) == 0, s != nil
+	// fmt.Println(s == nil)
+
+	// var runes []rune
+	// for _, r := range "Hello, 世界" {
+	// 	runes = append(runes, r)
+	// }
+	// fmt.Printf("%q\n", runes) // "['H' 'e' 'l' 'l' 'o' ',' ' ' '世' '界']"
+
+	// a := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	// fmt.Printf("%T %v\n", a, a)
+
+	// s := a[1:5]
+	// fmt.Printf("%T %v\n", s, s)
+
+	// s = append.Int(s, 10, 20, 30)
+	// fmt.Printf("%T %v\n", s, s)
+	// fmt.Printf("%T %v\n", a, a)
+
+	// var x, y []int
+	// for i := 0; i < 10; i++ {
+	// 	y = append.Int(x, i)
+	// 	fmt.Printf("%d cap=%d\t%v\n", i, cap(y), y)
+	// 	x = y
+	// }
+
+	// var x []int
+	// x = append(x, 1)
+	// x = append(x, 2, 3)
+	// x = append(x, 4, 5, 6)
+	// x = append(x, x...) // append the slice x
+	// fmt.Println(x)      // "[1 2 3 4 5 6 1 2 3 4 5 6]"
+	data := []string{"one", "", "three"}
+	fmt.Printf("%q\n", nonempty.NonemptyV2(data)) // `["one" "three"]`
+	fmt.Printf("%q\n", data)                      // `["one" "three" "three"]`
 }
