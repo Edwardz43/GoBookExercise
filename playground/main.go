@@ -1,10 +1,5 @@
 package main
 
-import (
-	"GoBook/book/ch4/nonempty"
-	"fmt"
-)
-
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
 
@@ -284,7 +279,40 @@ func main() {
 	// x = append(x, 4, 5, 6)
 	// x = append(x, x...) // append the slice x
 	// fmt.Println(x)      // "[1 2 3 4 5 6 1 2 3 4 5 6]"
-	data := []string{"one", "", "three"}
-	fmt.Printf("%q\n", nonempty.NonemptyV2(data)) // `["one" "three"]`
-	fmt.Printf("%q\n", data)                      // `["one" "three" "three"]`
+	// data := []string{"one", "", "three"}
+	// fmt.Printf("%q\n", nonempty.NonemptyV2(data)) // `["one" "three"]`
+	// fmt.Printf("%q\n", data)                      // `["one" "three" "three"]`
+
+	// ages := map[string]int{
+	// 	"alice":   31,
+	// 	"charlie": 34,
+	// 	"ed":      36,
+	// 	"ting":    31,
+	// }
+
+	// var names []string
+	// for name := range ages {
+	// 	names = append(names, name)
+	// }
+	// sort.Strings(names)
+	// for _, name := range names {
+	// 	fmt.Printf("%s\t%d\n", name, ages[name])
+	// }
+
+	// var ages map[string]int
+	// fmt.Println(ages == nil)    // "true"
+	// fmt.Println(len(ages) == 0) // "true"
+
+	// //ages["carol"] = 21 // panic: assignment to entry in nil map
+
+	// age, ok := ages["bob"]
+	// if !ok { /* "bob" is not a key in this map; age == 0. */
+	// 	fmt.Println(ok)
+	// } else {
+	// 	fmt.Println(age)
+	// }
+
+	// if age, ok := ages["bob"]; !ok { /* ... */
+	// }
+
 }
