@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
 
@@ -314,5 +316,61 @@ func main() {
 
 	// if age, ok := ages["bob"]; !ok { /* ... */
 	// }
+
+	type Point struct {
+		X, Y int
+	}
+
+	p := Point{1, 2}
+	q := Point{2, 1}
+	r := Point{1, 2}
+	fmt.Println(p.X == q.X && p.Y == q.Y) // "false"
+	fmt.Println(p == q)                   // "false"
+	fmt.Println(p == r)                   // "true"
+
+	type address struct {
+		hostname string
+		port     int
+	}
+	hits := make(map[address]int)
+	hits[address{"golang.org", 443}]++
+	fmt.Println(hits)
+
+	// type Circle struct {
+	// 	Center Point
+	// 	Radius int
+	// }
+
+	// type Wheel struct {
+	// 	Circle Circle
+	// 	Spokes int
+	// }
+
+	// var w Wheel
+	// w.Circle.Center.X = 8
+	// w.Circle.Center.Y = 8
+	// w.Circle.Radius = 5
+	// w.Spokes = 20
+
+	type Circle struct {
+		Point
+		Radius int
+	}
+
+	type Wheel struct {
+		Circle
+		Spokes int
+	}
+
+	var w Wheel
+	w.X = 8      // equivalent to w.Circle.Point.X = 8
+	w.Y = 8      // equivalent to w.Circle.Point.Y = 8
+	w.Radius = 5 // equivalent to w.Circle.Radius = 5
+	w.Spokes = 20
+
+	fmt.Println(w)
+
+	//w = Wheel{8, 8, 5, 20}                       // compile error: unknown fields
+	//w = Wheel{X: 8, Y: 8, Radius: 5, Spokes: 20} // compile error: unknown fields
 
 }
