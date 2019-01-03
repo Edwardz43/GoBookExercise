@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
 func main() {
 	//fmt.Printf("The max int 8 is %d \n", math.MaxInt8)
 
@@ -314,5 +319,30 @@ func main() {
 
 	// if age, ok := ages["bob"]; !ok { /* ... */
 	// }
+
+	type Employee struct {
+		ID        int
+		Name      string
+		Address   string
+		DoB       time.Time
+		Position  string
+		Salary    int
+		ManagerID int
+	}
+	var dilbert Employee
+
+	position := &dilbert.Position
+
+	*position = "Senior " + *position // promoted, for outsourcing to Elbonia
+
+	dilbert.Salary -= 5000 // demoted, for writing too few lines of code
+
+	fmt.Println(dilbert)
+
+	var employeeOfTheMonth = &dilbert
+
+	employeeOfTheMonth.Position += " (proactive team player)"
+
+	fmt.Println(employeeOfTheMonth)
 
 }
