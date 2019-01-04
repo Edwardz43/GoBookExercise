@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"GoBook/book/ch5/wait"
+	"log"
+	"math"
 )
 
 func main() {
@@ -320,49 +321,49 @@ func main() {
 	// if age, ok := ages["bob"]; !ok { /* ... */
 	// }
 
-	type Employee struct {
-		ID        int
-		Name      string
-		Address   string
-		DoB       time.Time
-		Position  string
-		Salary    int
-		ManagerID int
-	}
-	var dilbert Employee
+	// type Employee struct {
+	// 	ID        int
+	// 	Name      string
+	// 	Address   string
+	// 	DoB       time.Time
+	// 	Position  string
+	// 	Salary    int
+	// 	ManagerID int
+	// }
+	// var dilbert Employee
 
-	position := &dilbert.Position
+	// position := &dilbert.Position
 
-	*position = "Senior " + *position // promoted, for outsourcing to Elbonia
+	// *position = "Senior " + *position // promoted, for outsourcing to Elbonia
 
-	dilbert.Salary -= 5000 // demoted, for writing too few lines of code
+	// dilbert.Salary -= 5000 // demoted, for writing too few lines of code
 
-	fmt.Println(dilbert)
+	// fmt.Println(dilbert)
 
-	var employeeOfTheMonth = &dilbert
+	// var employeeOfTheMonth = &dilbert
 
-	employeeOfTheMonth.Position += " (proactive team player)"
+	// employeeOfTheMonth.Position += " (proactive team player)"
 
-	fmt.Println(employeeOfTheMonth)
+	// fmt.Println(employeeOfTheMonth)
 
-	type Point struct {
-		X, Y int
-	}
+	// type Point struct {
+	// 	X, Y int
+	// }
 
-	p := Point{1, 2}
-	q := Point{2, 1}
-	r := Point{1, 2}
-	fmt.Println(p.X == q.X && p.Y == q.Y) // "false"
-	fmt.Println(p == q)                   // "false"
-	fmt.Println(p == r)                   // "true"
+	// p := Point{1, 2}
+	// q := Point{2, 1}
+	// r := Point{1, 2}
+	// fmt.Println(p.X == q.X && p.Y == q.Y) // "false"
+	// fmt.Println(p == q)                   // "false"
+	// fmt.Println(p == r)                   // "true"
 
-	type address struct {
-		hostname string
-		port     int
-	}
-	hits := make(map[address]int)
-	hits[address{"golang.org", 443}]++
-	fmt.Println(hits)
+	// type address struct {
+	// 	hostname string
+	// 	port     int
+	// }
+	// hits := make(map[address]int)
+	// hits[address{"golang.org", 443}]++
+	// fmt.Println(hits)
 
 	// type Circle struct {
 	// 	Center Point
@@ -380,25 +381,57 @@ func main() {
 	// w.Circle.Radius = 5
 	// w.Spokes = 20
 
-	type Circle struct {
-		Point
-		Radius int
-	}
+	// type Circle struct {
+	// 	Point
+	// 	Radius int
+	// }
 
-	type Wheel struct {
-		Circle
-		Spokes int
-	}
+	// type Wheel struct {
+	// 	Circle
+	// 	Spokes int
+	// }
 
-	var w Wheel
-	w.X = 8      // equivalent to w.Circle.Point.X = 8
-	w.Y = 8      // equivalent to w.Circle.Point.Y = 8
-	w.Radius = 5 // equivalent to w.Circle.Radius = 5
-	w.Spokes = 20
+	// var w Wheel
+	// w.X = 8      // equivalent to w.Circle.Point.X = 8
+	// w.Y = 8      // equivalent to w.Circle.Point.Y = 8
+	// w.Radius = 5 // equivalent to w.Circle.Radius = 5
+	// w.Spokes = 20
 
-	fmt.Println(w)
+	// fmt.Println(w)
 
 	//w = Wheel{8, 8, 5, 20}                       // compile error: unknown fields
 	//w = Wheel{X: 8, Y: 8, Radius: 5, Spokes: 20} // compile error: unknown fields
 
+	//fmt.Println(hypot(3, 4))  // "5"
+	// fmt.Printf("%T\n", add)   // "func(int, int) int"
+	// fmt.Printf("%T\n", sub)   // "func(int, int) int"
+	// fmt.Printf("%T\n", first) // "func(int, int) int"
+	// fmt.Printf("%T\n", zero)  // "func(int, int) int"
+	url := "http://192.168.1.102"
+
+	// if err := wait.WaitForServer(url); err != nil {
+	// 	fmt.Fprintf(os.Stderr, "Site is down: %v\n", err)
+	// 	os.Exit(1)
+	// }
+
+	log.SetPrefix("wait: ")
+	log.SetFlags(0)
+
+	// if err := wait.WaitForServer(url); err != nil {
+	// 	log.Fatalf("Site is down: %v\n", err)
+	// }
+
+	if err := wait.WaitForServer(url); err != nil {
+		log.Printf("ping failed: %v; networking disabled", err)
+	}
+
 }
+
+func hypot(x, y float64) float64 {
+	return math.Sqrt(x*x + y*y)
+}
+
+func add(x int, y int) int   { return x + y }
+func sub(x, y int) (z int)   { z = x - y; return }
+func first(x int, _ int) int { return x }
+func zero(int, int) int      { return 0 }
