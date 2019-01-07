@@ -3,6 +3,7 @@ package main
 import (
 	"GoBook/book/ch6/intset"
 	"fmt"
+
 	"math"
 )
 
@@ -540,7 +541,49 @@ func main() {
 	//x.DifferenceWith(&y) // {1 144}
 	//x.SymmetricDifference(&y) // "{1 42 144}"
 	fmt.Println(x.String())
+
+	// f := square
+	// fmt.Println(f(3)) // "9"
+	// f = negative
+	// fmt.Println(f(3))     // "-3"
+	// fmt.Printf("%T\n", f) // "func(int) int"
+	//f = product           // compile error: can't assign func(int, int) int to func(int) int
+
+	// fmt.Println(strings.Map(add1, "HAL-9000")) // "IBM.:111"
+	// fmt.Println(strings.Map(add1, "VMS"))      // "WNT"
+	// fmt.Println(strings.Map(add1, "Admix"))    // "Benjy"
+
+	// s := strings.Map(func(r rune) rune { return r + 1 }, "HAL-9000")
+	// fmt.Println(s)
+
+	// var rmdirs []func()
+	// for _, d := range tempDirs() {
+	// 	dir := d               // NOTE: necessary!
+	// 	os.MkdirAll(dir, 0755) // creates parent directories too
+	// 	rmdirs = append(rmdirs, func() {
+	// 		os.RemoveAll(dir)
+	// 	})
+
+	// }
+	// // ...do some work...
+	// for _, rmdir := range rmdirs {
+	// 	rmdir() // clean up
+	// }
+	// fmt.Println(sum.Sum())
+	// fmt.Println(sum.Sum(1, 2))
+	// fmt.Println(sum.Sum(1, 2, 3))
+	// fmt.Println(sum.Sum(1, 2, 3, 4))
+
+	// values := []int{1, 2, 3, 4}
+	// fmt.Println(sum.Sum(values...)) // "10"
+
+	// fmt.Printf("%T\n", f) // "func(...int)"
+	// fmt.Printf("%T\n", g) // "func([]int)"
+
 }
+
+func f(...int) {}
+func g([]int)  {}
 
 func hypot(x, y float64) float64 {
 	return math.Sqrt(x*x + y*y)
@@ -550,3 +593,16 @@ func add(x int, y int) int   { return x + y }
 func sub(x, y int) (z int)   { z = x - y; return }
 func first(x int, _ int) int { return x }
 func zero(int, int) int      { return 0 }
+
+func square(n int) int {
+	return n * n
+}
+func negative(n int) int {
+	return -n
+}
+
+func product(m, n int) int {
+	return m * n
+}
+
+func add1(r rune) rune { return r + 1 }
