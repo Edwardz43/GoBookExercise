@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoBook/book/ch5/wait"
-	"log"
+	"GoBook/book/ch6/intset"
+	"fmt"
 	"math"
 )
 
@@ -407,24 +407,139 @@ func main() {
 	// fmt.Printf("%T\n", sub)   // "func(int, int) int"
 	// fmt.Printf("%T\n", first) // "func(int, int) int"
 	// fmt.Printf("%T\n", zero)  // "func(int, int) int"
-	url := "http://192.168.1.102"
+	// url := "http://192.168.1.102"
 
 	// if err := wait.WaitForServer(url); err != nil {
 	// 	fmt.Fprintf(os.Stderr, "Site is down: %v\n", err)
 	// 	os.Exit(1)
 	// }
 
-	log.SetPrefix("wait: ")
-	log.SetFlags(0)
+	// log.SetPrefix("wait: ")
+	// log.SetFlags(0)
 
 	// if err := wait.WaitForServer(url); err != nil {
 	// 	log.Fatalf("Site is down: %v\n", err)
 	// }
 
-	if err := wait.WaitForServer(url); err != nil {
-		log.Printf("ping failed: %v; networking disabled", err)
-	}
+	// if err := wait.WaitForServer(url); err != nil {
+	// 	log.Printf("ping failed: %v; networking disabled", err)
+	// }
 
+	// const day = 24 * time.Hour
+	// fmt.Println(day.Seconds()) // "86400"
+
+	// p := geometry.Point{1, 2}
+
+	// q := geometry.Point{4, 6}
+
+	// fmt.Println(geometry.Distance(p, q))
+	// fmt.Println(p.Distance(q))
+
+	// perim := geometry.Path{
+	// 	{1, 1},
+	// 	{5, 1},
+	// 	{5, 4},
+	// 	{1, 1},
+	// }
+	// fmt.Println(perim.Distance()) // "12"
+	// r := &geometry.Point{1, 2}
+	// r.ScaleBy(2.5)
+	// fmt.Println(*r) // "{2.5, 5}"
+
+	// p := geometry.Point{1, 2}
+	// pptr := &p
+	// pptr.ScaleBy(2)
+	// fmt.Println(p) // "{2, 4}"
+
+	// p2 := geometry.Point{1, 2}
+	// (&p2).ScaleBy(2)
+	// fmt.Println(p) // "{2, 4}"
+
+	// p := geometry.Point{1, 2}
+	// p.ScaleBy(2)   // implicit (&p)
+	// fmt.Println(p) // "{2, 4}"
+
+	//geometry.Point{1, 2}.ScaleBy(2) // compile error: can't take address of Point literal
+
+	// var cp coloredpoint.ColoredPoint
+	// cp.X = 1
+	// fmt.Println(cp.Point.X) // "1"
+	// cp.Point.Y = 2
+	// fmt.Println(cp.Y) // "2"
+
+	// red := color.RGBA{255, 0, 0, 255}
+	// blue := color.RGBA{0, 0, 255, 255}
+	// var p = geometry.ColoredPoint{geometry.Point{1, 1}, red}
+	// var q = geometry.ColoredPoint{geometry.Point{5, 4}, blue}
+
+	// fmt.Println(p.Distance(q.Point))
+
+	// p.ScaleBy(2)
+	// q.ScaleBy(2)
+	// fmt.Println(p.Distance(q.Point))
+
+	//p.Distance(q) // compile error: cannot use q (ColoredPoint) as Point
+
+	// p := geometry.Point{1, 2}
+	// q := geometry.Point{4, 6}
+
+	// distanceFromP := p.Distance // method value
+
+	// fmt.Println(distanceFromP(q)) // "5"
+	// var origin geometry.Point
+
+	// fmt.Println(distanceFromP(origin)) // "2.23606797749979", sqrt(5)
+
+	// scaleP := p.ScaleBy // method value
+	// scaleP(2)           // p becomes (2, 4)
+	// fmt.Println(p)
+	// scaleP(3) //      then (6, 12)
+	// fmt.Println(p)
+	// scaleP(10) //      then (60, 120)
+	// fmt.Println(p)
+
+	// distance := geometry.Point.Distance // method expression
+	// fmt.Println(distance(p, q))         //"5"
+	// fmt.Printf("%T\n", distance)        // "func(Point, Point) float64"
+
+	// scale := (*geometry.Point).ScaleBy
+	// scale(&p, 2)
+	// fmt.Println(p)            // "{2 4}"
+	// fmt.Printf("%T\n", scale) // "func(*Point, float64)"
+
+	// perim := geometry.Path{
+	// 	{1, 1},
+	// 	{5, 1},
+	// 	{5, 4},
+	// 	{1, 1},
+	// }
+
+	// perim.TranslateBy(geometry.Point{1, 1}, true)
+	// fmt.Println(perim)
+
+	var x, y intset.IntSet
+	x.Add(1)
+	x.Add(144)
+	x.Add(9)
+	//fmt.Println(x.String())
+
+	y.Add(9)
+	y.Add(42)
+	//fmt.Println(y.String())
+
+	// x.UnionWith(&y)
+	// fmt.Println(x.String())           // "{1 9 42 144}"
+	// fmt.Println(x.Has(9), x.Has(123)) // "true false"
+
+	// fmt.Println(&x)         // "{1 9 42 144}"
+	// fmt.Println(x.String()) // "{1 9 42 144}"
+	// fmt.Println(x)          // "{[4398046511618 0 65536]}"
+
+	//x.UnionWith(&y) // "{1 9 42 144}"
+	x.IntersectWith(&y) // "{9}"
+	//x.DifferenceWith(&y) // {1 144}
+	//x.SymmetricDifference(&y) // "{1 42 144}"
+	fmt.Println(x.String())
 }
 
 func hypot(x, y float64) float64 {
