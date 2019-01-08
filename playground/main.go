@@ -1,9 +1,6 @@
 package main
 
 import (
-	"GoBook/book/ch6/intset"
-	"fmt"
-
 	"math"
 )
 
@@ -518,30 +515,6 @@ func main() {
 	// perim.TranslateBy(geometry.Point{1, 1}, true)
 	// fmt.Println(perim)
 
-	var x, y intset.IntSet
-	x.Add(1)
-	x.Add(144)
-	x.Add(9)
-	//fmt.Println(x.String())
-
-	y.Add(9)
-	y.Add(42)
-	//fmt.Println(y.String())
-
-	// x.UnionWith(&y)
-	// fmt.Println(x.String())           // "{1 9 42 144}"
-	// fmt.Println(x.Has(9), x.Has(123)) // "true false"
-
-	// fmt.Println(&x)         // "{1 9 42 144}"
-	// fmt.Println(x.String()) // "{1 9 42 144}"
-	// fmt.Println(x)          // "{[4398046511618 0 65536]}"
-
-	//x.UnionWith(&y) // "{1 9 42 144}"
-	x.IntersectWith(&y) // "{9}"
-	//x.DifferenceWith(&y) // {1 144}
-	//x.SymmetricDifference(&y) // "{1 42 144}"
-	fmt.Println(x.String())
-
 	// f := square
 	// fmt.Println(f(3)) // "9"
 	// f = negative
@@ -579,6 +552,40 @@ func main() {
 
 	// fmt.Printf("%T\n", f) // "func(...int)"
 	// fmt.Printf("%T\n", g) // "func([]int)"
+
+	// var x intset.IntSet
+	// x.Add(1)
+	// x.Add(3)
+	// x.Add(5)
+	// fmt.Println(x.Len())
+	// fmt.Println(x.String())
+
+	// // b := x.Remove(1)
+	// // fmt.Println(b, x.String())
+
+	// y := x.Copy()
+	// fmt.Println(y)
+
+	// for _, v := range x.Elems() {
+	// 	fmt.Println(v)
+	// }
+	// y.Add(9)
+	// y.Add(42)
+	//fmt.Println(y.String())
+
+	// x.UnionWith(&y)
+	// fmt.Println(x.String())           // "{1 9 42 144}"
+	// fmt.Println(x.Has(9), x.Has(123)) // "true false"
+
+	// fmt.Println(&x)         // "{1 9 42 144}"
+	// fmt.Println(x.String()) // "{1 9 42 144}"
+	// fmt.Println(x)          // "{[4398046511618 0 65536]}"
+
+	//x.UnionWith(&y) // "{1 9 42 144}"
+	// x.IntersectWith(&y) // "{9}"
+	//x.DifferenceWith(&y) // {1 144}
+	//x.SymmetricDifference(&y) // "{1 42 144}"
+	// fmt.Println(x.String())
 
 }
 
