@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"gobook/book/ch7/bytecounter"
 	"math"
 )
 
@@ -587,6 +589,14 @@ func main() {
 	//x.SymmetricDifference(&y) // "{1 42 144}"
 	// fmt.Println(x.String())
 
+	var c bytecounter.ByteCounter
+	c.Write([]byte("hello world"))
+	fmt.Println(c)
+
+	c = 0
+	var name = "Ed Lo"
+	fmt.Fprintf(&c, "hello, %s", name)
+	fmt.Println(c)
 }
 
 func f(...int) {}
