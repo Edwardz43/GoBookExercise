@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Go WebSocket Tutorial</title>
+</head>
+
+<body>
+
+  <h2>Hello World</h2>
+  <h3>Online</h3><span id='onlinemembers'></span>
+  <br>
+  <button onclick='test()'>click</button>
+  <div id="text_area">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script>
+    let text_area = document.getElementById('text_area')
+    let onlinemembers = document.getElementById('onlinemembers')
+
+    // loaded via CDN: https://cdn.socket.io/socket.io-1.2.1.js
+    var socket = io.connect('http://localhost:8081/socket.io');
+
+    socket.on('connect', function (data) {
+      console.log('connection');
+      socket.emit('myevent', {
+        status: 'data'
+      });
+    });
+
+    socket.on('onlinemembers', function (data) {
+      onlinemembers.innerHTML = data
+    });
+
+    function test() {
+      socket.emit('hello', 'hello, world');
+    }
+
+    function show(msg) {
+      text_area.innerHTML += msg + "<br>"
+    }
+  </script>
+
+</body>
+
+</html>
