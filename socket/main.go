@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -15,13 +16,12 @@ type customServer struct {
 }
 
 type member struct {
-	index uint
-	id    string
+	id   string
+	name string
 }
 
 type onlinemembers struct {
 	members map[string]member
-	count   int
 }
 
 var om onlinemembers
@@ -60,26 +60,24 @@ func configureSocketIO() *socketio.Server {
 
 	//Client connects to server
 	server.On("connection", func(so socketio.Socket) {
-
 		//What will happen as soon as the connection is established:
 		so.On("connection", func(msg string) {
 			so.Join("clients")
 
-			m := member{uint(om.count), so.Id()}
-
-			addMember(&om, m)
+			om.AddMember(so.Id())
 
 			println(so.Id() + " joined clients.")
 
 			//In case you want to send a custom emit directly after the client connected.
 			//If you fire an emit directly after the connection event it won't work therefore you need to wait a bit
 			//In this case two seconds.
-			ticker := time.NewTicker(2 * time.Second)
+			ticker := time.NewTicker(500 * time.Millisecond)
 			go func() {
 				for {
 					select {
 					case <-ticker.C:
 						so.Emit("onlinemembers", len(om.members))
+						//server.BroadcastTo("clients", "onlinemembers", om.count)
 						ticker.Stop()
 						return
 					}
@@ -89,24 +87,18 @@ func configureSocketIO() *socketio.Server {
 
 		//What will happen if clients disconnect
 		so.On("disconnection", func() {
-			log.Println(so.Id() + " on disconnect")
-			removeMember(&om, so.Id())
-			it(&om)
+			om.RemoveMember(so.Id())
+			server.BroadcastTo("clients", "onlinemembers", len(om.members))
 		})
 
 		//Custom event as example
-		so.On("hello", func(msg string) {
-			log.Println("received request (hello): " + msg)
-
-			server.BroadcastTo("clients", so.Id()+" : ", msg)
-
-			sm := "How can I help you?"
-
-			so.Emit("Hi", sm)
-
-			server.BroadcastTo("clients", "server : ", sm)
+		so.On("job", func(msg string) {
+			log.Println("job : " + msg)
+			server.BroadcastTo("clients", "onlinemembers", om.members[so.Id()].name+" : "+msg)
 		})
+
 	})
+
 	server.On("error", func(so socketio.Socket, err error) {
 		log.Println("error:", err)
 	})
@@ -114,28 +106,34 @@ func configureSocketIO() *socketio.Server {
 	return server
 }
 
-func addMember(o *onlinemembers, m member) {
+func (o *onlinemembers) AddMember(id string) {
+
+	name := fmt.Sprintf("user-%s", id)
+
+	m := member{id, name}
 
 	o.members[m.id] = m
 
-	o.count++
+	log.Printf("member : " + m.name + " added")
 
-	log.Printf("member : " + m.id + " added")
-
-	it(o)
+	//o.Foreach()
 }
 
-func removeMember(o *onlinemembers, id string) {
+func (o *onlinemembers) RemoveMember(id string) {
 
 	delete(o.members, id)
 
-	log.Printf("member : " + id + " removed")
+	//log.Printf("member : " + id + " removed")
 
-	it(o)
+	//o.Foreach()
 }
 
-func it(o *onlinemembers) {
+func (o *onlinemembers) Foreach() {
 	for k, v := range o.members {
-		log.Printf("key : %s, value : %s", k, v.id)
+		log.Printf("key : %s, value : %s", k, v.name)
 	}
+}
+
+func timer(t chan string) {
+	t <- string(time.Now().Format("2019-05-14 12:23:56"))
 }
