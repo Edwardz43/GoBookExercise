@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/googollee/go-socket.io"
+	socketio "github.com/googollee/go-socket.io"
 )
 
 //Custom server which basically only contains a socketio variable
@@ -22,6 +22,11 @@ type member struct {
 
 type onlinemembers struct {
 	members map[string]member
+}
+
+type Post struct {
+	ID  string
+	Msg string
 }
 
 var om onlinemembers
@@ -77,7 +82,7 @@ func configureSocketIO() *socketio.Server {
 					select {
 					case <-ticker.C:
 						so.Emit("onlinemembers", len(om.members))
-						//server.BroadcastTo("clients", "onlinemembers", om.count)
+						server.BroadcastTo("clients", "onlinemembers", len(om.members))
 						ticker.Stop()
 						return
 					}
@@ -97,6 +102,17 @@ func configureSocketIO() *socketio.Server {
 			server.BroadcastTo("clients", "onlinemembers", om.members[so.Id()].name+" : "+msg)
 		})
 
+		so.On("post", func(msg string) {
+
+			name := om.members[so.Id()].name
+
+			data := Post{name, msg}
+
+			log.Println("member : " + data.ID + " => " + data.Msg)
+
+			server.BroadcastTo("clients", "post", data)
+		})
+
 	})
 
 	server.On("error", func(so socketio.Socket, err error) {
@@ -108,7 +124,7 @@ func configureSocketIO() *socketio.Server {
 
 func (o *onlinemembers) AddMember(id string) {
 
-	name := fmt.Sprintf("user-%s", id)
+	name := fmt.Sprintf("member%d", len(om.members))
 
 	m := member{id, name}
 

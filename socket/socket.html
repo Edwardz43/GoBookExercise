@@ -11,7 +11,7 @@
   .box {
     float: left;
     width: 20%;
-    height: 200px;
+    height: 300px;
   }
 
   #container {
@@ -33,51 +33,65 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <script>
+    let info = io.connect('http://localhost:8081/socket.io');
+
     let client_list = []
 
-    var client = function () {
-      this.socket = io.connect('http://localhost:8081/socket.io');
-
-      this.socket.on('onlinemembers', function (data) {
-        onlinemembers.innerHTML = data
-        console.log(data)
-        //show(id, data)
-      });
-
-      this.socket.on('connect', function (data) {
-        console.log('connection');
-      });
-    }
-
-
-
-    let text_area = document.getElementById('text_area')
     let onlinemembers = document.getElementById('onlinemembers')
 
     let len = 0;
 
     let container = document.getElementById('container')
 
+    info.on('onlinemembers', function (data) {
+      onlinemembers.innerHTML = data - 1
+      //console.log(data)
+      //show(id, data)
+    });
+
+
+    var client = function () {
+      this.name = "member" + len
+
+      this.socket = io.connect('http://localhost:8081/socket.io');
+
+      // this.socket.on('connect', function (data) {
+      //   //console.log('connection');
+      // });
+
+      this.socket.on('post', function (data) {
+         console.log(data);
+         let id = data.ID
+         let ta = document.getElementById(id)
+         console.log(id);
+      });
+
+      produce(this.name, len)
+      len++
+    }
 
     function connect() {
-
       var c = new client()
-
       client_list.push(c)
+    }
 
-      var id = "member" + len;
-
-      produce(id, len)
-      len++
+    function submit(index){
+      let client = client_list[index]
+      let input = document.getElementById("submit"+index)
+      console.log(input.value)
+      client.socket.emit("post", input.value)
+      input.value = "";
     }
 
     function produce(id, index) {
       let box =
         "<div id='box" + index + "' class='box'>" +
-        "<span>" + id + "</span>" +
-        "<button onclick='disconnect(" + index + ")'>disconnect</button>" +
-        "<textarea id='" + id + "' class='member'>" +
+        "<span style='color:red;'>" + id + "</span>" +
+        "<button onclick='disconnect(" + index + ")'>disconnect</button>" +        
+        "<textarea id='" + id + "' class='member' disabled>" +
         "</textarea>" +
+        "<input id='submit" + index + "' type='text'/>"+
+        "<button onclick='submit(" + index + ")'>submit</button>" +
         "</div>"
       container.innerHTML += box
     }
@@ -86,7 +100,6 @@
       var m = document.getElementById(id)
       m.innerHTML += msg + "\n"
       m.scrollTop = m.scrollHeight;
-      console.log(m.innerHTML)
     }
 
     function do_job(id, so) {
@@ -102,8 +115,11 @@
 
     function disconnect(id) {
       console.log(id)
+
       var c = client_list[id]
+
       window.a = c;
+
       c.socket.disconnect();
 
       client_list.splice[id, 1]
@@ -114,6 +130,7 @@
     Element.prototype.remove = function () {
       this.parentElement.removeChild(this);
     }
+
     NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
       for (var i = this.length - 1; i >= 0; i--) {
         if (this[i] && this[i].parentElement) {
@@ -125,6 +142,7 @@
     function remove_box(id) {
       var box = document.getElementById("box" + id).remove();
     }
+
   </script>
 
 </body>
