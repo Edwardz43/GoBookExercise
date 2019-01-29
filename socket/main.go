@@ -71,7 +71,9 @@ func configureSocketIO() *socketio.Server {
 
 			om.AddMember(so.Id())
 
-			println(so.Id() + " joined clients.")
+			o := om.members[so.Id()]
+
+			server.BroadcastTo("clients", "newmember", o.name+" joined clients.")
 
 			//In case you want to send a custom emit directly after the client connected.
 			//If you fire an emit directly after the connection event it won't work therefore you need to wait a bit
@@ -124,7 +126,7 @@ func configureSocketIO() *socketio.Server {
 
 func (o *onlinemembers) AddMember(id string) {
 
-	name := fmt.Sprintf("member%d", len(om.members))
+	name := fmt.Sprintf("member%d", len(om.members)-1)
 
 	m := member{id, name}
 

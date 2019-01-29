@@ -18,6 +18,13 @@
     margin-top: 2%;
   }
 
+  .title {
+    color: white;
+    background-color: aqua;
+    font-weight: bold;
+    margin-right: 44%;
+  }
+
   .member {
     width: 90%;
     height: 80%;
@@ -45,8 +52,16 @@
 
     info.on('onlinemembers', function (data) {
       onlinemembers.innerHTML = data - 1
-      //console.log(data)
-      //show(id, data)
+    });
+
+    info.on('post', function (data) {
+      let id = data.ID
+      let msg = data.ID + " : " + data.Msg
+      show(msg)
+    });
+
+    info.on('newmember', function (data) {
+      show(data)
     });
 
 
@@ -55,15 +70,8 @@
 
       this.socket = io.connect('http://localhost:8081/socket.io');
 
-      // this.socket.on('connect', function (data) {
-      //   //console.log('connection');
-      // });
-
-      this.socket.on('post', function (data) {
-         console.log(data);
-         let id = data.ID
-         let ta = document.getElementById(id)
-         console.log(id);
+      this.socket.on('connect', function (data) {
+        //console.log('connection');
       });
 
       produce(this.name, len)
@@ -75,9 +83,9 @@
       client_list.push(c)
     }
 
-    function submit(index){
+    function submit(index) {
       let client = client_list[index]
-      let input = document.getElementById("submit"+index)
+      let input = document.getElementById("submit" + index)
       console.log(input.value)
       client.socket.emit("post", input.value)
       input.value = "";
@@ -86,20 +94,22 @@
     function produce(id, index) {
       let box =
         "<div id='box" + index + "' class='box'>" +
-        "<span style='color:red;'>" + id + "</span>" +
-        "<button onclick='disconnect(" + index + ")'>disconnect</button>" +        
+        "<span class='title'>" + id + "</span>" +
+        "<button onclick='disconnect(" + index + ")'>disconnect</button>" +
         "<textarea id='" + id + "' class='member' disabled>" +
         "</textarea>" +
-        "<input id='submit" + index + "' type='text'/>"+
+        "<input id='submit" + index + "' type='text'/>" +
         "<button onclick='submit(" + index + ")'>submit</button>" +
         "</div>"
       container.innerHTML += box
     }
 
-    function show(id, msg) {
-      var m = document.getElementById(id)
-      m.innerHTML += msg + "\n"
-      m.scrollTop = m.scrollHeight;
+    function show(msg) {
+      client_list.forEach(function (e) {
+        let ta = document.getElementById(e.name)
+        ta.innerHTML += msg + "\n"
+        ta.scrollTop = ta.scrollHeight;
+      });
     }
 
     function do_job(id, so) {
@@ -142,7 +152,6 @@
     function remove_box(id) {
       var box = document.getElementById("box" + id).remove();
     }
-
   </script>
 
 </body>
