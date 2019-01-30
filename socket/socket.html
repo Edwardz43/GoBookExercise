@@ -32,8 +32,12 @@
 </style>
 
 <body>
-  <h3>Online</h3><span id='onlinemembers'></span>
-  <br>
+  <H1>Room : Clients</H1>
+  <div>
+      <label for='onlinemembers'>Online : </label><input id='onlinemembers' type='text' value='' disabled></span>
+      <br>
+  </div>
+  
   <button onclick='connect()'>login</button>
   <br>
   <div id="container"></div>
@@ -51,7 +55,7 @@
     let container = document.getElementById('container')
 
     info.on('onlinemembers', function (data) {
-      onlinemembers.innerHTML = data - 1
+      onlinemembers.value = data - 1
     });
 
     info.on('post', function (data) {
