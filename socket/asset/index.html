@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Go WebSocket Tutorial</title>
+</head>
+<style>
+  .box {
+    float: left;
+    width: 20%;
+    height: 300px;
+  }
+
+  #container {
+    margin-top: 2%;
+  }
+
+  .title {
+    color: white;
+    background-color: aqua;
+    font-weight: bold;
+    margin-right: 44%;
+  }
+
+  .member {
+    width: 90%;
+    height: 80%;
+  }
+</style>
+
+<body>
+  <H1>Room : Clients</H1>
+  <div>
+      <label for='onlinemembers'>Online : </label><input id='onlinemembers' type='text' value='' disabled></span>
+      <br>
+  </div>
+  
+  <button onclick='connect()'>login</button>
+  <br>
+  <div id="container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script>
+    let info = io.connect('http://localhost:8081/socket.io');
+
+    let client_list = []
+
+    let onlinemembers = document.getElementById('onlinemembers')
+
+    let len = 0;
+
+    let container = document.getElementById('container')
+
+    info.on('onlinemembers', function (data) {
+      onlinemembers.value = data - 1
+    });
+
+    info.on('post', function (data) {
+      let id = data.ID
+      let msg = data.ID + " : " + data.Msg
+      show(msg)
+    });
+
+    info.on('newmember', function (data) {
+      show(data)
+    });
+
+
+    var client = function () {
+      this.name = "member" + len
+
+      this.socket = io.connect('http://localhost:8081/socket.io');
+
+      this.socket.on('connect', function (data) {
+        //console.log('connection');
+      });
+
+      produce(this.name, len)
+      len++
+    }
+
+    function connect() {
+      var c = new client()
+      client_list.push(c)
+    }
+
+    function submit(index) {
+      let client = client_list[index]
+      let input = document.getElementById("submit" + index)
+      console.log(input.value)
+      client.socket.emit("post", input.value)
+      input.value = "";
+    }
+
+    function produce(id, index) {
+      let box =
+        "<div id='box" + index + "' class='box'>" +
+        "<span class='title'>" + id + "</span>" +
+        "<button onclick='disconnect(" + index + ")'>disconnect</button>" +
+        "<textarea id='" + id + "' class='member' disabled>" +
+        "</textarea>" +
+        "<input id='submit" + index + "' type='text'/>" +
+        "<button onclick='submit(" + index + ")'>submit</button>" +
+        "</div>"
+      container.innerHTML += box
+    }
+
+    function show(msg) {
+      client_list.forEach(function (e) {
+        let ta = document.getElementById(e.name)
+        ta.innerHTML += msg + "\n"
+        ta.scrollTop = ta.scrollHeight;
+      });
+    }
+
+    function do_job(id, so) {
+      var job = setInterval(function () {
+        var m = document.getElementById(id)
+        var msg = Math.random() * 100
+        //m.innerHTML += msg + "\n";
+        so.emit('job', msg);
+      }, 3000)
+
+      job()
+    }
+
+    function disconnect(id) {
+      console.log(id)
+
+      var c = client_list[id]
+
+      window.a = c;
+
+      c.socket.disconnect();
+
+      client_list.splice[id, 1]
+
+      remove_box(id)
+    }
+
+    Element.prototype.remove = function () {
+      this.parentElement.removeChild(this);
+    }
+
+    NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
+      for (var i = this.length - 1; i >= 0; i--) {
+        if (this[i] && this[i].parentElement) {
+          this[i].parentElement.removeChild(this[i]);
+        }
+      }
+    }
+
+    function remove_box(id) {
+      var box = document.getElementById("box" + id).remove();
+    }
+  </script>
+
+</body>
+
+</html>

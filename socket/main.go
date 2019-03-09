@@ -54,6 +54,7 @@ func main() {
 	//HTTP settings
 	println("Core Service is listening on port 8081...")
 	http.Handle("/socket.io/", wsServer)
+	http.Handle("/", http.FileServer(http.Dir("./asset")))
 	http.ListenAndServe(":8081", nil)
 }
 
@@ -65,6 +66,7 @@ func configureSocketIO() *socketio.Server {
 
 	//Client connects to server
 	server.On("connection", func(so socketio.Socket) {
+
 		//What will happen as soon as the connection is established:
 		so.On("connection", func(msg string) {
 			so.Join("clients")
@@ -133,8 +135,6 @@ func (o *onlinemembers) AddMember(id string) {
 	o.members[m.id] = m
 
 	log.Printf("member : " + m.name + " added")
-
-	//o.Foreach()
 }
 
 func (o *onlinemembers) RemoveMember(id string) {
@@ -142,14 +142,6 @@ func (o *onlinemembers) RemoveMember(id string) {
 	delete(o.members, id)
 
 	//log.Printf("member : " + id + " removed")
-
-	//o.Foreach()
-}
-
-func (o *onlinemembers) Foreach() {
-	for k, v := range o.members {
-		log.Printf("key : %s, value : %s", k, v.name)
-	}
 }
 
 func timer(t chan string) {
