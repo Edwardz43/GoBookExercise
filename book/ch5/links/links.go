@@ -1,8 +1,8 @@
 package links
 
 import (
-	"fmt"
-	"gobook/book/ch5/outline2"
+	"github.com/Edwardz43/GoBookExercise/book/ch5/outline2"
+	"fmt"	
 	"net/http"
 
 	"golang.org/x/net/html"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoBook/book/ch2/tempconv"
 	"fmt"
+	"github.com/Edwardz43/GoBookExercise/book/ch2/tempconv"
 )
 
 func main() {

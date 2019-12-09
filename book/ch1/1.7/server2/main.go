@@ -11,10 +11,10 @@ var mu sync.Mutex
 var count int
 
 func main() {
-	fmt.Println("http://localhost:8000/")
+	fmt.Println("http://localhost:8880/")
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/count", counter)
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	log.Fatal(http.ListenAndServe("localhost:8880", nil))
 }
 
 // handler echoes the Path component of the requested URL.

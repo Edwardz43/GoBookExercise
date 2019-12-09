@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"gobook/book/ch7/bytecounter"
+	"github.com/Edwardz43/GoBookExercise/book/ch7/bytecounter"
+	"fmt"	
 	"math"
 )
 

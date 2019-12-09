@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"GoBook/exercises/exercise2.2/weightconv"
+	"github.com/Edwardz43/GoBookExercise/exercises/ch2/2.2/weightconv"
 )
 
 func main() {

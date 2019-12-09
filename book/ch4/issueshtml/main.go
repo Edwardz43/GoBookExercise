@@ -1,11 +1,12 @@
 package main
 
 import (
-	"GoBook/book/ch4/github"
 	"html/template"
 	"log"
 	"os"
 	"time"
+
+	"github.com/Edwardz43/GoBookExercise/book/ch4/github"
 )
 
 var issuesList = template.Must(template.New("issueslist").Parse(`

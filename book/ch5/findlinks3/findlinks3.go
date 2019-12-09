@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"gobook/book/ch5/links"
+	"github.com/Edwardz43/GoBookExercise/book/ch5/links"
+	"fmt"	
 	"log"
 	"os"
 )

@@ -1,11 +1,12 @@
 package main
 
 import (
-	"GoBook/book/ch4/github"
 	"fmt"
 	"log"
 	"os"
 	"time"
+
+	"github.com/Edwardz43/GoBookExercise/book/ch4/github"
 )
 
 func main() {

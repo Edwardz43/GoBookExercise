@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoBook/book/ch2/popcount"
 	"fmt"
+	"github.com/Edwardz43/GoBookExercise/book/ch2/popcount"
 	"os"
 	"strconv"
 )

@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	fmt.Println("http://localhost:8000/")
+	fmt.Println("http://localhost:8880/")
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	log.Fatal(http.ListenAndServe("localhost:8880", nil))
 }
 
 // handler echoes the HTTP request.
